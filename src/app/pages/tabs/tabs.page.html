@@ -1,0 +1,28 @@
+<ion-tabs>
+  <!-- <ion-header translucent>
+    <ion-toolbar color="primary">
+      <ion-title>Audio Book</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+  <ion-tab-bar slot="top" color="primary">
+    <ion-tab-button tab="tabone" (click)="home()">
+      <ion-icon name="home"></ion-icon>
+      <ion-label> Home</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tabtwo" (click)="recordings()">
+      <ion-icon name="microphone"></ion-icon>
+      <ion-label> Recordings</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tabthree" (click)="notifications()">
+      <ion-icon name="notifications"></ion-icon>
+      <ion-label> Notifications</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tabfour" (click)="friends()">
+      <ion-icon name="people"></ion-icon>
+      <ion-label> people</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
