@@ -1,5 +1,7 @@
 {
-  "name": "social",
-  "integrations": {},
+  "name": "audiobook",
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
