@@ -12,9 +12,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { File } from '@ionic-native/File/ngx';
 import { MediaCapture } from '@ionic-native/media-capture/ngx';
 import { Media } from '@ionic-native/media/ngx';
+import { PeoplePage} from '../app/pages/people/people.page';
+import { TabtwoPage} from '../app/pages/tabtwo/tabtwo.page';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,PeoplePage,],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [

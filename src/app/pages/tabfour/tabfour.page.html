@@ -1,39 +1,28 @@
 <ion-content fullscreen>
   <ion-list>
-    <ion-item>
-      <ion-avatar slot="start">
-        <img src="https://raw.githubusercontent.com/ionic-team/ionic-docs/master/src/demos/api/list/avatar-poe.png">
-      </ion-avatar>
-      <ion-label>
-        <h2>Finn</h2>       
-      </ion-label>
+    <ion-item lines="none">
+      <ion-icon name="person" slot="start"></ion-icon>
+      <ion-label>Profile</ion-label>
     </ion-item>
-
-    <ion-item>
-      <ion-avatar slot="start">
-        <img src="https://ionicframework.com/docs/demos/api/list/avatar-leia.png">
-      </ion-avatar>
-      <ion-label>
-        <h2>Han</h2>       
-      </ion-label>
+    <ion-item lines="none">
+        <ion-icon name="people" slot="start"></ion-icon>
+      <ion-label (click)="people()">People</ion-label>
     </ion-item>
-
-    <ion-item>
-      <ion-avatar slot="start">
-        <img src="https://raw.githubusercontent.com/ionic-team/ionic-docs/master/src/demos/api/list/avatar-ben.png">
-      </ion-avatar>
-      <ion-label>
-        <h2>Ray</h2>        
-      </ion-label>
+    <ion-item lines="none">
+      <ion-icon name="microphone" slot="start"></ion-icon>
+      <ion-label>Recordings</ion-label>
     </ion-item>
-
-    <ion-item>
-      <ion-avatar slot="start">
-        <img src="https://raw.githubusercontent.com/ionic-team/ionic-docs/master/src/demos/api/list/avatar-han.png">
-      </ion-avatar>
-      <ion-label>
-        <h2>Luke</h2>        
-      </ion-label>
+    <ion-item lines="none">
+      <ion-icon name="help-circle" slot="start"></ion-icon>
+      <ion-label>Help & Support</ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-icon name="cog" slot="start"></ion-icon>
+      <ion-label>Settings & Privacy</ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-icon name="log-out" slot="start"></ion-icon>
+      <ion-label>Logout</ion-label>
     </ion-item>
   </ion-list>
-  </ion-content>
+</ion-content>

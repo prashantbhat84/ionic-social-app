@@ -21,7 +21,7 @@ export class TabsPage implements OnInit {
   notifications(){
     console.log("notifications");
   }
-  friends(){
+  menu(){
     console.log("friends");
   }
 }
