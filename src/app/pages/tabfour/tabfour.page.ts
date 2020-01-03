@@ -18,7 +18,10 @@ export class TabfourPage implements OnInit {
   people(){
     this.router.navigate(['/people'],{replaceUrl:true}); 
   }
-  // profile(){
-  //   this.router.navigate(['/profile'],{replaceUrl:true});
-  // }
+  profile(){
+    this.router.navigate(['/profile'],{replaceUrl:true});
+  }
+  logout(){
+    this.router.navigate(['/login'],{replaceUrl:true});
+  }
 }

@@ -1,0 +1,45 @@
+
+  
+
+<ion-content>
+  <ion-col class="ion-justify-content-center">
+    <ion-avatar class="logo ">
+      <img src="../../../assets/images/audiobook.png">
+    </ion-avatar>
+  </ion-col>
+  <section class="top"> 
+    <ion-col class="ion-text-center">
+      <div>
+        <ion-item>
+          <ion-label position="floating" color="light">Phone or email</ion-label>
+          <ion-input color="light"></ion-input>
+        </ion-item>
+      </div>
+    </ion-col>
+    <ion-col class="ion-text-center">
+      <div>
+        <ion-item>
+          <ion-label position="floating" color="light">Password</ion-label>
+          <ion-input color="light" type="Password"></ion-input>
+        </ion-item>
+      </div>
+    </ion-col>
+    <ion-col>
+      <div class="ion-padding">
+        <ion-button expand="block" color="medium" type="submit" class="ion-no-margin">Log In</ion-button>
+      </div>
+    </ion-col>
+    <ion-col class="ion-text-center">
+      <div>
+        <ion-text color="light" tappable> Forgot Password? </ion-text>
+      </div>
+    </ion-col>
+  </section>
+  <section class="bottom">
+    <ion-col class="ion-text-center">
+      <div>
+        <ion-button color="success" (click)="signup()">Create New Audio Book Account</ion-button>
+      </div>
+    </ion-col>
+  </section>
+</ion-content>

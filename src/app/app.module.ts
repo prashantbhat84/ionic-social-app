@@ -13,10 +13,12 @@ import { File } from '@ionic-native/File/ngx';
 import { MediaCapture } from '@ionic-native/media-capture/ngx';
 import { Media } from '@ionic-native/media/ngx';
 import { PeoplePage} from '../app/pages/people/people.page';
-import { TabtwoPage} from '../app/pages/tabtwo/tabtwo.page';
+import { ProfilePage} from '../app/pages/profile/profile.page';
+import { LoginPage} from '../app/pages/login/login.page';
+import { SignupPage} from '../app/pages/signup/signup.page';
 
 @NgModule({
-  declarations: [AppComponent,PeoplePage,],
+  declarations: [AppComponent,PeoplePage,ProfilePage,LoginPage,SignupPage],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [
