@@ -17,7 +17,8 @@ export class TabfourPage implements OnInit {
     this.router.navigate(['/profile'], { replaceUrl: true });
   }
   logout() {
-    this.router.navigate(['/login'], { replaceUrl: true });
+    window.localStorage.clear();
+    this.router.navigate(['/login'],{replaceUrl:true});
   }
   ngOnInit() {
   }

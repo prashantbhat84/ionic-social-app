@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { auth } from 'firebase/app';
+import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
@@ -8,11 +11,65 @@ import { Router } from '@angular/router';
 })
 export class SignupPage implements OnInit {
 
-  constructor(public router: Router) { }
+  fullname: string = ""
+  phonenumber: string = ""
+  email: string = ""
+  password: string = ""
+  cpassword: string = ""
+
+  constructor(
+    public router: Router,
+    public afAuth: AngularFireAuth,
+    public alert: AlertController,
+    public db: AngularFireDatabase
+
+  ) { }
+
+  ngOnInit() {
+  }
 
   login() {
     this.router.navigate(['/login'], { replaceUrl: true });
   }
-  ngOnInit() {
+
+  async register() {
+    const { email, password, cpassword, fullname, phonenumber } = this
+    if (password !== cpassword) {
+      this.showAlert("Error !", "Passwords not getting Matched")
+      return console.error(" Passwords not matching")
+    }
+
+    try {
+      const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+      let id = res.user.uid;
+      console.log(res)
+      this.showAlert("Success", "Welcome Aboard !!")
+      let dbref = this.db.object('/users/' + id);
+      dbref.set({
+        email, password, fullname, phonenumber, id
+      });
+
+      this.router.navigate(['/']);
+    } catch (error) {
+
+      const { code, message } = error;
+      if (code === "auth/email-already-in-use") {
+        this.showAlert("Email Exists", message)
+      }
+      if (code === "auth/weak-password") {
+       this.showAlert("Weak Password", "Password Length must be of minimum 6 characters");
+      }
+    }
   }
+
+  async showAlert(header: string, message: string) {
+    const alert = await this.alert.create({
+      header,
+      message,
+      buttons: ["OK"]
+    })
+
+    await alert.present()
+  }
+
 }

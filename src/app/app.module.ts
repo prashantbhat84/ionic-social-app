@@ -12,16 +12,28 @@ import { AppRoutingModule } from './app-routing.module';
 import { File } from '@ionic-native/File/ngx';
 import { MediaCapture } from '@ionic-native/media-capture/ngx';
 import { Media } from '@ionic-native/media/ngx';
-import { PeoplePage} from '../app/pages/people/people.page';
-import { ProfilePage} from '../app/pages/profile/profile.page';
-import { LoginPage} from '../app/pages/login/login.page';
-import { SignupPage} from '../app/pages/signup/signup.page';
-import {ForgotpasswordPage} from '../app/pages/forgotpassword/forgotpassword.page';
+import { PeoplePage } from '../app/pages/people/people.page';
+import { ProfilePage } from '../app/pages/profile/profile.page';
+import { LoginPage } from '../app/pages/login/login.page';
+import { SignupPage } from '../app/pages/signup/signup.page';
+import { ForgotpasswordPage } from '../app/pages/forgotpassword/forgotpassword.page';
+import { FormsModule } from '@angular/forms';
+import firebaseConfig from '../environments/firebase';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 @NgModule({
-  declarations: [AppComponent,PeoplePage,ProfilePage,LoginPage,SignupPage,ForgotpasswordPage],
+  declarations: [AppComponent, PeoplePage, ProfilePage, LoginPage, SignupPage, ForgotpasswordPage],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    FormsModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule 
+  ],
   providers: [
     StatusBar,
     SplashScreen,
@@ -32,4 +44,4 @@ import {ForgotpasswordPage} from '../app/pages/forgotpassword/forgotpassword.pag
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,9 +1,11 @@
-<ion-toolbar color="primary" hideBackButton="true">
-    <ion-buttons left>
-        <ion-icon name="arrow-back" (click)="goBack()"></ion-icon>
-    </ion-buttons>
+<ion-header>
+  <ion-toolbar color="primary" hideBackButton="true">
+  <ion-buttons slot="start">
+      <ion-icon name="arrow-back" (click)="goBack()" ></ion-icon>
+  </ion-buttons>
 <ion-title> Profile</ion-title>
 </ion-toolbar>
+</ion-header>
 <ion-content>
   <ion-card>
   <img class="main-img" src="https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg">
