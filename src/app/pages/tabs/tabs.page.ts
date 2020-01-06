@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.page.html',
@@ -8,20 +9,18 @@ import { Component, OnInit } from '@angular/core';
 export class TabsPage implements OnInit {
 
   constructor() { }
-
-  ngOnInit() {
-  }
-
-  home(){
+  home() {
     console.log("home");
   }
-  recordings(){
+  recordings() {
     console.log("recordings");
   }
-  notifications(){
+  notifications() {
     console.log("notifications");
   }
-  menu(){
+  menu() {
     console.log("friends");
+  }
+  ngOnInit() {
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -6,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+  constructor(public router: Router) { }
+  Followers() {
+    this.router.navigate(['/people'], { replaceUrl: true });
+  }
+  Following() {
+    this.router.navigate(['/people'], { replaceUrl: true });
 
-  constructor() { }
-
+  }
+  goBack() {
+    this.router.navigate([''],{ replaceUrl: true });
+  }
   ngOnInit() {
   }
 

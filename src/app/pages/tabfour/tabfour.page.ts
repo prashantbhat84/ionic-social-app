@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { from } from 'rxjs';
 
 @Component({
@@ -9,19 +9,17 @@ import { from } from 'rxjs';
 })
 export class TabfourPage implements OnInit {
 
-  constructor(public router:Router) { }
-
-
+  constructor(public router: Router) { }
+  people() {
+    this.router.navigate(['/people'], { replaceUrl: true });
+  }
+  profile() {
+    this.router.navigate(['/profile'], { replaceUrl: true });
+  }
+  logout() {
+    this.router.navigate(['/login'], { replaceUrl: true });
+  }
   ngOnInit() {
   }
 
-  people(){
-    this.router.navigate(['/people'],{replaceUrl:true}); 
-  }
-  profile(){
-    this.router.navigate(['/profile'],{replaceUrl:true});
-  }
-  logout(){
-    this.router.navigate(['/login'],{replaceUrl:true});
-  }
 }

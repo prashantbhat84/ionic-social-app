@@ -16,9 +16,10 @@ import { PeoplePage} from '../app/pages/people/people.page';
 import { ProfilePage} from '../app/pages/profile/profile.page';
 import { LoginPage} from '../app/pages/login/login.page';
 import { SignupPage} from '../app/pages/signup/signup.page';
+import {ForgotpasswordPage} from '../app/pages/forgotpassword/forgotpassword.page';
 
 @NgModule({
-  declarations: [AppComponent,PeoplePage,ProfilePage,LoginPage,SignupPage],
+  declarations: [AppComponent,PeoplePage,ProfilePage,LoginPage,SignupPage,ForgotpasswordPage],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [

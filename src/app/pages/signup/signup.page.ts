@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -8,12 +8,11 @@ import {Router} from '@angular/router';
 })
 export class SignupPage implements OnInit {
 
-  constructor(public router:Router) { }
+  constructor(public router: Router) { }
 
-  ngOnInit() {
+  login() {
+    this.router.navigate(['/login'], { replaceUrl: true });
   }
-
-  login(){
-    this.router.navigate(['/login'],{replaceUrl:true});
+  ngOnInit() {
   }
 }

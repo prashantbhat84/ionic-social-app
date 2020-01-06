@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-people',
   templateUrl: './people.page.html',
@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PeoplePage implements OnInit {
 
-  constructor() { }
+  constructor(public router: Router) { }
+
+  goBack() {
+    this.router.navigate([''],{ replaceUrl: true });
+  }
 
   ngOnInit() {
   }
