@@ -22,9 +22,14 @@ import firebaseConfig from '../environments/firebase';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+
+import { from } from 'rxjs';
+import { TabsPage } from './pages/tabs/tabs.page';
+
 
 @NgModule({
-  declarations: [AppComponent, PeoplePage, ProfilePage, LoginPage, SignupPage, ForgotpasswordPage],
+  declarations: [AppComponent, PeoplePage, ProfilePage, LoginPage, SignupPage, ForgotpasswordPage,TabsPage],
   entryComponents: [],
   imports: [BrowserModule,
     IonicModule.forRoot(),
@@ -32,7 +37,9 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
     FormsModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
-    AngularFireDatabaseModule 
+    AngularFireDatabaseModule,
+    AngularFireStorageModule
+    
   ],
   providers: [
     StatusBar,

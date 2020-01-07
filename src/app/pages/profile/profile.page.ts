@@ -16,7 +16,7 @@ export class ProfilePage implements OnInit {
 
   }
   goBack() {
-    this.router.navigate([''],{ replaceUrl: true });
+    this.router.navigate(['/tabs/tabfour'],{ replaceUrl: true });
   }
   ngOnInit() {
   }

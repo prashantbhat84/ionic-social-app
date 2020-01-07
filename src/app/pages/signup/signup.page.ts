@@ -43,10 +43,12 @@ export class SignupPage implements OnInit {
       const res = await this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       let id = res.user.uid;
       console.log(res)
+      let following=0;
+      let followers=0;
       this.showAlert("Success", "Welcome Aboard !!")
       let dbref = this.db.object('/users/' + id);
       dbref.set({
-        email, password, fullname, phonenumber, id
+        email,fullname, phonenumber, id,followers,following
       });
 
       this.router.navigate(['/']);

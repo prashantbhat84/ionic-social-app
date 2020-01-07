@@ -42,6 +42,10 @@ export class TabonePage implements OnInit {
   }
 
 }
+    // ionViewDidEnter(){
+    //   let user = this.afAuth.auth.currentUser
+    //   console.log(user.uid);
+    // }
 async showAlert(header: string, message: string) {
   const alert = await this.alert.create({
     header,

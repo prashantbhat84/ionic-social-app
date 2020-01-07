@@ -31,6 +31,7 @@ export class ForgotpasswordPage implements OnInit {
     this.afAuth.auth
       .sendPasswordResetEmail(email)
       .then(() => {
+        this.showAlert("Email Sent", "Check Your mail for Password Reset Instructions")
         this.router.navigate(['/login'],{ replaceUrl: true });
       })
       .catch(error => {

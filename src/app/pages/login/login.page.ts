@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
     const { email, password } = this
     try {
         const res = await this.afAuth.auth.signInWithEmailAndPassword(email,password);
-        this.router.navigate(['/']);
+        this.router.navigate(['/tabs/tabone']);
     } catch (err) {
       console.dir(err)
       if(err.code === "auth/user-not-found"){

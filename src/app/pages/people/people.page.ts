@@ -10,7 +10,7 @@ export class PeoplePage implements OnInit {
   constructor(public router: Router) { }
 
   goBack() {
-    this.router.navigate([''],{ replaceUrl: true });
+    this.router.navigate(['/tabs/tabfour'],{ replaceUrl: true });
   }
 
   ngOnInit() {
