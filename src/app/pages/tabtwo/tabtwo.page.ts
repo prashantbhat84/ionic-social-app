@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  MediaCapture,
-  MediaFile,
-  CaptureError
-} from '@ionic-native/media-capture/ngx';
+// import {
+//   MediaCapture,
+//   MediaFile,
+//   CaptureError
+// } from '@ionic-native/media-capture/ngx';
 import { ActionSheetController, Platform, NavController } from '@ionic/angular';
 import { File, FileEntry } from '@ionic-native/File/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
@@ -14,6 +14,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { auth } from 'firebase/app';
 import { AlertController } from '@ionic/angular';
 import { FirebaseApp } from '@angular/fire';
+
 
 // const MEDIA_FOLDER_NAME = 'my_media';
 
@@ -52,14 +53,21 @@ export class TabtwoPage {
     public afAuth: AngularFireAuth,
     public alert: AlertController,
     public store: AngularFireStorage,
-    public data : AngularFireDatabase
+    public data : AngularFireDatabase,
+  
 
   ) { }
 
-  // method one
-  ionViewWillEnter() {
+
+
+  ngOnInit(){}
+
+  ionViewWillEnter(){
+ 
     this.getAudioList();
   }
+  
+
   startTimer(duration:number){
       this.state = 'start';
       clearInterval(this.interval);
@@ -111,7 +119,9 @@ export class TabtwoPage {
     this.audio.startRecord();
     this.recording = true;
   }
+
   async getAudioList() {
+    // window.location.reload(true);
     let userid = this.afAuth.auth.currentUser.uid;
     let audioList = [];
     const rootref = this.data.database.ref();
@@ -122,10 +132,13 @@ export class TabtwoPage {
         let values = (child.val());
         this.urlarray.push(values);
         this.tasks = Object.values(this.urlarray);
+        
+
       })
     })
   }
 
+ 
   stopRecord() {
     this.audio.stopRecord();
     // let data = { filename: this.fileName };
@@ -137,14 +150,19 @@ export class TabtwoPage {
     file.push(data);
     let dt = new Date();
     let fileid = (Math.random());
-    let userid="aqwer" //Firebase.auth().currentUser.uid;
+    // let userid="aqwer" 
+   let userid = this.afAuth.auth.currentUser.uid;
       let storageRef= this.store.storage.ref();
       let audioRef= storageRef.child('audiofiles'+fileid);
-      let newAudioBlob= new Blob(file,{type:'.3gp'});
-      const task=audioRef.put(newAudioBlob,{contentType:'audio/3gp'});
+      let newAudioBlob= new Blob(file,{type:'.mp3'});
+      const task=audioRef.put(newAudioBlob,{contentType:'audio/mp3'});
       task.then(snapshot=>snapshot.ref.getDownloadURL()).then(url=>{
-           const dbref= this.data.database.ref('/audio/'+userid).push(fileid).set({fileurl:url})
+           const dbref= this.data.database.ref('/audio/'+userid).push(fileid).set({fileurl:url,name:fileid})
+      }).catch(error=>{
+        alert('error in storage');
+        alert(error);
       })
+      this.tasks=[];
 
     this.getAudioList();
     this.stopTimer();

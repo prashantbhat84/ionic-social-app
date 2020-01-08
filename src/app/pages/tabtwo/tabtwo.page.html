@@ -23,10 +23,16 @@
         <ion-icon name="pause"></ion-icon>
       </ion-button>
 
-      <ion-label>
+      <!-- <ion-label>
         <h3>{{audio.filename}}</h3>
-      </ion-label>
+      </ion-label> -->
     </ion-item> 
+    
+
+    <ion-item *ngFor="let item of tasks">
+      <ion-label> {{item.name}}</ion-label>
+    </ion-item>
+  
   </ion-list>
 </ion-content>
 
