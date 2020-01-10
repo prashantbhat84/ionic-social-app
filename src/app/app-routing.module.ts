@@ -6,6 +6,8 @@ import { LoginPage } from '../app/pages/login/login.page';
 import { SignupPage } from '../app/pages/signup/signup.page';
 import { ForgotpasswordPage } from '../app/pages/forgotpassword/forgotpassword.page';
 import { TabsPage} from '../app/pages/tabs/tabs.page';
+import { FollowersPage} from './pages/followers/followers.page';
+import {FollowingPage} from './pages/following/following.page';
 import { from } from 'rxjs';
 
 
@@ -18,6 +20,8 @@ const routes: Routes = [
   { path: 'login', component: LoginPage ,},
   { path: 'signup', component: SignupPage },
   { path: 'forgotpassword', component: ForgotpasswordPage },
+  {path: 'followers', component: FollowersPage},
+  {path: 'following', component: FollowingPage},
   {
     path: 'tabs',
     component: TabsPage,
@@ -44,7 +48,7 @@ const routes: Routes = [
     path: 'tabs',
     redirectTo: '/tabs/tabone',
     pathMatch:'full'
-  }
+  },
 ];
 
 @NgModule({

@@ -26,10 +26,12 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { from } from 'rxjs';
 import { TabsPage } from './pages/tabs/tabs.page';
+import { FollowersPage} from './pages/followers/followers.page';
+import {FollowingPage} from './pages/following/following.page';
 
 
 @NgModule({
-  declarations: [AppComponent, PeoplePage, ProfilePage, LoginPage, SignupPage, ForgotpasswordPage,TabsPage],
+  declarations: [AppComponent, PeoplePage, ProfilePage, LoginPage, SignupPage, ForgotpasswordPage,TabsPage,FollowersPage,FollowingPage],
   entryComponents: [],
   imports: [BrowserModule,
     IonicModule.forRoot(),

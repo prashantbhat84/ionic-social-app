@@ -51,7 +51,7 @@ export class SignupPage implements OnInit {
         email,fullname, phonenumber, id,followers,following
       });
 
-      this.router.navigate(['/']);
+      this.router.navigate(['/tabs']);
     } catch (error) {
 
       const { code, message } = error;

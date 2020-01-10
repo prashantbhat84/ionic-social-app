@@ -3,20 +3,20 @@
   <ion-buttons slot="start">
       <ion-icon name="arrow-back" (click)="goBack()" ></ion-icon>
   </ion-buttons>
-<ion-title> People</ion-title>
+<ion-title> Following </ion-title>
 </ion-toolbar>
 </ion-header>
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let item of tasks, let i= index"   lines="full">
      <ion-icon name="person" slot="start"></ion-icon>
-      <ion-label> {{item.fullname}}</ion-label>
+      <ion-label> {{item.name}}</ion-label>
      
-      <ion-button color="primary" (click)="clicked(i)" *ngIf = "!followstatus[i]">
-       Follow
-      </ion-button>
+      <!-- <ion-button color="primary" >
+       Follow back
+      </ion-button> -->
 
-      <ion-button color="danger" (click) = "unfollow(i)" *ngIf = "followstatus[i]">
+      <ion-button color="danger">
         Unfollow
       </ion-button>
      
