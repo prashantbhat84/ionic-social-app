@@ -26,7 +26,7 @@
     <ion-tab-button (click)="Followers()">
         <ion-icon name="person-add"></ion-icon>
         <ion-label>Followers</ion-label>
-        <ion-badge color="primary">11</ion-badge>
+        <ion-badge color="primary">{{followerlength}}</ion-badge>
     </ion-tab-button>
 </ion-buttons>
   </div>
@@ -38,7 +38,7 @@
   <ion-tab-button (click)="Following()">
     <ion-icon name="people"></ion-icon>    
       <ion-label>Following</ion-label>
-      <ion-badge color="primary">41</ion-badge>
+      <ion-badge color="primary">{{followinglength}}</ion-badge>
   </ion-tab-button>
   </ion-buttons>
   </div>

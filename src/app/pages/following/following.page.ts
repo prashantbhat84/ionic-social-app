@@ -27,6 +27,7 @@ export class FollowingPage implements OnInit {
     this.router.navigate(['/profile'], { replaceUrl: true });
   }
   following(){
+    
     const databaseref = this.data.database.ref('/following/'+ this.afAuth.auth.currentUser.uid);
     databaseref.once("value",(snapshot)=>{
       snapshot.forEach(child =>{
@@ -38,5 +39,18 @@ export class FollowingPage implements OnInit {
       })
     })
   }
+  async remove(i){
+    try {
+      let user= this.afAuth.auth.currentUser.uid;
+    
+     let followerref= this.data.database.ref('/following/'+user);
+     const followerstats=await followerref.child(i).remove();
+   
+    } catch (error) {
+      console.log(error);
+    }
+     
+  
+   }
 
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 @Component({
   selector: 'app-tabone',
@@ -10,18 +11,24 @@ import { Router } from '@angular/router';
 })
 export class TabonePage implements OnInit {
 
+  name;
   constructor(
     public afAuth: AngularFireAuth,
     public alert: AlertController,
     public router:Router,
+    public data: AngularFireDatabase,
   ) { }
 
   ngOnInit() {
   }
-  ionViewWillEnter(){
-    let user = this.afAuth.auth.currentUser
-    console.log(user.uid);
 
+
+  ionViewWillEnter(){
+    this.getdetails();
+    let user = this.afAuth.auth.currentUser
+    let email = user.email;
+    console.log("From Tab One");    
+    console.log(user.email);
     console.log(user.emailVerified);
     if (user.emailVerified === false) {
       console.log("email not verified");
@@ -55,4 +62,14 @@ async showAlert(header: string, message: string) {
 
   await alert.present()
 }
+
+getdetails() {
+  let user = this.afAuth.auth.currentUser.uid;
+  let dbref = this.data.database.ref('/users/' + user);
+  dbref.once('value', snap => {
+    this.name = snap.val().fullname;
+
+  })
+}
+
 }

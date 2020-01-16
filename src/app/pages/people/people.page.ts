@@ -27,40 +27,31 @@ export class PeoplePage implements OnInit {
   ionViewWillEnter() {
     this.getfollowinguser();
   }
-
   ionViewDidEnter() {
-
     for (let i = 0; i < this.tasks.length; i++) {
       for (let j = 0; j < this.followinguser.length; j++) {
         if (this.tasks[i].id === this.followinguser[j]) {
-          this.followstatus[i]= true;
+          this.followstatus[i] = true;
         }
         else {
-          this.followstatus[i]= false;
+          this.followstatus[i] = false;
         }
       }
     }
     console.log(this.followstatus);
   }
-
-
   goBack() {
     this.router.navigate(['/tabs/tabfour'], { replaceUrl: true });
   }
-
   ngOnInit() {
     this.getuser();
     this.platform.backButton.subscribe(() => {
     });
   }
-
-
   clicked(i) {
     this.follow(this.tasks[i].id);
-    this.followstatus[i] = true;
     console.log(i);
   }
-
   checkfollowinguser(id) {
     setTimeout(() => {
       if (this.followinguser.includes(id)) {
@@ -70,7 +61,6 @@ export class PeoplePage implements OnInit {
       return this.followstatus = false;
     }, 1000);
   }
-
   getuser() {
     const dbref = this.data.database.ref();
     const urlref = dbref.child('/users');
@@ -85,7 +75,6 @@ export class PeoplePage implements OnInit {
       // console.log(this.tasks);
     })
   }
-
   getfollowinguser() {
     const dataref = this.data.database.ref();
     const uref = dataref.child('/following/' + this.afAuth.auth.currentUser.uid);
@@ -97,9 +86,6 @@ export class PeoplePage implements OnInit {
       })
     })
   }
-
-
-
   getuserdetails(id, node, nodeid) {
     let user = id;
     let name;
@@ -117,9 +103,7 @@ export class PeoplePage implements OnInit {
       })
     })
   }
-
-
-
+  
   unfollow(i) {
     console.log('inside unfollow');
     this.followstatus[i] = false;
@@ -136,12 +120,8 @@ export class PeoplePage implements OnInit {
     })
   }
 
-
-
-
-
-
   follow(i) {
+    this.followstatus[i] = false;
     let reference1 = this.data.database.ref('/following/' + this.afAuth.auth.currentUser.uid);
     console.log(reference1);
     let followerid = i;
@@ -150,8 +130,4 @@ export class PeoplePage implements OnInit {
     this.getuserdetails(followingid, 'followers', followerid);
     this.getfollowinguser();
   }
-
-
-
-
 }

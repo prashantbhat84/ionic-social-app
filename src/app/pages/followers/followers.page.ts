@@ -35,11 +35,23 @@ export class FollowersPage implements OnInit {
       snapshot.forEach(child =>{
         let values = (child.val());
         this.follow.push(values);
-        console.log(this.follow);
-        
+        console.log(this.follow);        
         this.tasks = this.follow;
       })
     })
   }
+ async remove(i){
+  try {
+    let user= this.afAuth.auth.currentUser.uid;
+  
+   let followerref= this.data.database.ref('/followers/'+user);
+   const followerstats=await followerref.child(i).remove();
+ 
+  } catch (error) {
+    console.log(error);
+  }
+   
+
+ }
 
 }

@@ -1,14 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
 import { File } from '@ionic-native/File/ngx';
 import { MediaCapture } from '@ionic-native/media-capture/ngx';
 import { Media } from '@ionic-native/media/ngx';
@@ -23,11 +20,10 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-
-import { from } from 'rxjs';
 import { TabsPage } from './pages/tabs/tabs.page';
 import { FollowersPage} from './pages/followers/followers.page';
 import {FollowingPage} from './pages/following/following.page';
+
 
 
 @NgModule({
@@ -50,6 +46,7 @@ import {FollowingPage} from './pages/following/following.page';
     MediaCapture,
     File,
     Media,
+    
   ],
   bootstrap: [AppComponent]
 })

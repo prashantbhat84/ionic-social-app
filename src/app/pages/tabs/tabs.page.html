@@ -15,7 +15,13 @@
       <ion-label> Recordings</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="tabthree" (click)="notifications()">
+    <ion-tab-button tab="tabthree" (click)="notifications()" *ngIf="numberofnotifications !=0">
+      <ion-icon name="notifications"></ion-icon>
+      <ion-badge color="danger">{{numberofnotifications}}</ion-badge>
+      <ion-label> Notifications</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tabthree" (click)="notifications()" *ngIf="numberofnotifications ==0">
       <ion-icon name="notifications"></ion-icon>
       <ion-label> Notifications</ion-label>
     </ion-tab-button>
