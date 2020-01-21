@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { database } from 'firebase';
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +13,11 @@ export class ProfilePage implements OnInit {
   followerlength;
   followinglength;
   follow: any = [];
-  tasks: any
+  tasks: any;
+  time;
+  length: any;
+  posts: any = [];
+  testarray: any = [];
 
   constructor(public router: Router,
     public afAuth: AngularFireAuth,
@@ -28,27 +30,45 @@ export class ProfilePage implements OnInit {
   }
   Following() {
     this.router.navigate(['/following'], { replaceUrl: true });
-
   }
   goBack() {
     this.router.navigate(['/tabs/tabfour'], { replaceUrl: true });
   }
-  ngOnInit() {}
+  ngOnInit() { }
+
   ionViewDidEnter() {
     this.getdetails();
     this.followers();
     this.following();
+    this.getpostdetails();
   }
+
   getdetails() {
     let user = this.afAuth.auth.currentUser.uid;
     let dbref = this.data.database.ref('/users/' + user);
     dbref.once('value', snap => {
       this.name = snap.val().fullname;
-
     })
   }
 
- async followers() {
+  async getpostdetails() {
+    let testarray = [];
+    const user = this.afAuth.auth.currentUser.uid;
+    const dbref = this.data.database.ref('/posts/');
+    const snap = await dbref.once('value');
+    if (snap.child(user).exists()) {
+      const post = snap.child(user).val();
+      this.posts = (Object.values(post));
+      for (let i = 0; i < this.posts.length; i++) {
+        this.testarray[i] = this.posts[this.posts.length - i - 1];
+      }
+      return this.length = this.testarray.length;
+    }
+    this.length = 0;
+  }
+
+
+  async followers() {
     const databaseref = this.data.database.ref('/followers/');
     const snapshot = await databaseref.once('value');
     if (!snapshot.child(this.afAuth.auth.currentUser.uid).exists()) {

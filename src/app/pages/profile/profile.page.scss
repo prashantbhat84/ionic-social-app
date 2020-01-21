@@ -1,12 +1,40 @@
-.main-img{
+.main-img {
     height: 250px;
     width: 100%;
     padding-top: 0px;
 }
 
-.sub-img{
+.sub-img {
     height: 150px;
     width: 150px;
     border-radius: 50%;
     margin-top: -80px;
+}
+
+ion-card-subtitle {
+
+    font-size: 15px;
+}
+
+ion-card-content {
+
+    font-size: 22px;
+}
+
+.title {
+    font-size: 18px;
+
+}
+
+.maintitle {
+    text-transform: uppercase;
+}
+
+.noposts {
+    text-align: center;
+
+}
+
+ion-button {
+    margin: 10px;
 }

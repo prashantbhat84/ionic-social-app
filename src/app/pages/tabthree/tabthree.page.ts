@@ -10,35 +10,33 @@ import { AngularFireDatabase } from '@angular/fire/database';
 export class TabthreePage implements OnInit {
 
   notifications: any[];
-  notlen:any;
+  notlen: any;
+  testarray1: any = [];
 
   constructor(public afAuth: AngularFireAuth,
     public data: AngularFireDatabase, ) { }
 
   ngOnInit() {
   }
-  
-  ionViewWillEnter(){
+
+  ionViewWillEnter() {
     this.getusernotifications();
   }
 
-  async getusernotifications(){
-    const user= this.afAuth.auth.currentUser.uid;
-    const dbref= this.data.database.ref('/notifications/');
-      const snap= await dbref.once('value');
-      if(snap.child(user).exists()){
-         const notify= snap.child(user).val();
-         this.notifications=(Object.values(notify));
-         return  this.notlen=this.notifications.length;
-         
-    
-      }
-      this.notlen=0;
-        
-    
- 
+  async getusernotifications() {
 
-     
+    const user = this.afAuth.auth.currentUser.uid;
+    const dbref = this.data.database.ref('/notifications/');
+    const snap = await dbref.once('value');
+    if (snap.child(user).exists()) {
+      const notify = snap.child(user).val();
+      this.notifications = (Object.values(notify));
+      for (let i = 0; i < this.notifications.length; i++) {
+        this.testarray1[i] = this.notifications[this.notifications.length - i - 1];
+      }
+      return this.notlen = this.notifications.length;
+    }
+    this.notlen = 0;
 
   }
 

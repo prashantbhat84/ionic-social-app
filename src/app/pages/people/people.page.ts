@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Platform } from '@ionic/angular';
+
 @Component({
   selector: 'app-people',
   templateUrl: './people.page.html',
@@ -14,7 +15,7 @@ export class PeoplePage implements OnInit {
   tasks: any
   id: any
   followinguser: any = [];
-  followstatus: any = [];
+  followstatus: any[] = [];
 
   constructor(public router: Router,
     public afAuth: AngularFireAuth,
@@ -24,43 +25,35 @@ export class PeoplePage implements OnInit {
 
   ) { }
 
-  ionViewWillEnter() {
-    this.getfollowinguser();
-  }
-  ionViewDidEnter() {
-    for (let i = 0; i < this.tasks.length; i++) {
-      for (let j = 0; j < this.followinguser.length; j++) {
-        if (this.tasks[i].id === this.followinguser[j]) {
-          this.followstatus[i] = true;
-        }
-        else {
-          this.followstatus[i] = false;
-        }
-      }
-    }
-    console.log(this.followstatus);
-  }
-  goBack() {
-    this.router.navigate(['/tabs/tabfour'], { replaceUrl: true });
-  }
   ngOnInit() {
+    this.getfollowinguser();
     this.getuser();
     this.platform.backButton.subscribe(() => {
     });
   }
+
+  ionViewWillEnter() {
+    // this.getfollowinguser();
+    for (let i = 0; i < this.tasks.length; i++) {
+      if (this.followinguser.includes(this.tasks[i].id)) {
+        this.followstatus[i] = true;
+      }
+      else {
+        this.followstatus[i] = false;
+      }
+    }
+    console.log(this.followstatus);
+  }
+
+  goBack() {
+    this.router.navigate(['/tabs/tabfour'], { replaceUrl: true });
+  }
+
   clicked(i) {
     this.follow(this.tasks[i].id);
     console.log(i);
   }
-  checkfollowinguser(id) {
-    setTimeout(() => {
-      if (this.followinguser.includes(id)) {
-        return this.followstatus = true;
-        console.log('true');
-      }
-      return this.followstatus = false;
-    }, 1000);
-  }
+
   getuser() {
     const dbref = this.data.database.ref();
     const urlref = dbref.child('/users');
@@ -70,9 +63,8 @@ export class PeoplePage implements OnInit {
         this.people.push(values);
       })
       let filteredarray = this.people.filter(val => val.id !== this.afAuth.auth.currentUser.uid);
-      //console.log(filteredarray);
       this.tasks = filteredarray;
-      // console.log(this.tasks);
+
     })
   }
   getfollowinguser() {
@@ -81,11 +73,14 @@ export class PeoplePage implements OnInit {
     let dummy = [];
     uref.once("value", snap => {
       dummy = Object.values(snap.val());
+      console.log(dummy);
       dummy.map(dum => {
         this.followinguser.push(dum.id);
       })
+      console.log(this.followinguser);
     })
   }
+
   getuserdetails(id, node, nodeid) {
     let user = id;
     let name;
@@ -99,11 +94,10 @@ export class PeoplePage implements OnInit {
       noderef.set({
         id: id,
         name: name,
-
       })
     })
   }
-  
+
   unfollow(i) {
     console.log('inside unfollow');
     this.followstatus[i] = false;
