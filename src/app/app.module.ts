@@ -23,11 +23,13 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { TabsPage } from './pages/tabs/tabs.page';
 import { FollowersPage} from './pages/followers/followers.page';
 import {FollowingPage} from './pages/following/following.page';
+import { PostPage } from './pages/post/post.page';
+
 
 
 
 @NgModule({
-  declarations: [AppComponent, PeoplePage, ProfilePage, LoginPage, SignupPage, ForgotpasswordPage,TabsPage,FollowersPage,FollowingPage],
+  declarations: [AppComponent, PeoplePage, ProfilePage, LoginPage, SignupPage, ForgotpasswordPage,TabsPage,FollowersPage,FollowingPage,PostPage],
   entryComponents: [],
   imports: [BrowserModule,
     IonicModule.forRoot(),
@@ -46,8 +48,9 @@ import {FollowingPage} from './pages/following/following.page';
     MediaCapture,
     File,
     Media,
+
     
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent,PostPage]
 })
 export class AppModule { }

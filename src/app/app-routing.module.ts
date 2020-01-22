@@ -9,6 +9,8 @@ import { TabsPage} from '../app/pages/tabs/tabs.page';
 import { FollowersPage} from './pages/followers/followers.page';
 import {FollowingPage} from './pages/following/following.page';
 import { from } from 'rxjs';
+import { PostPage } from './pages/post/post.page';
+import { DataResolverService } from './resolver/data-resolver.service';
 
 
 
@@ -22,6 +24,20 @@ const routes: Routes = [
   { path: 'forgotpassword', component: ForgotpasswordPage },
   {path: 'followers', component: FollowersPage},
   {path: 'following', component: FollowingPage},
+  {path: 'post/:id',
+  resolve: {
+        special: DataResolverService
+      },
+   component: PostPage},
+
+
+  // {
+  //   path: 'post/:id',
+  //   resolve: {
+  //     special: DataResolverService
+  //   },
+  //   loadChildren:'./pages/post/post.module#PostPageModule'
+  // },
   {
     path: 'tabs',
     component: TabsPage,
@@ -49,6 +65,10 @@ const routes: Routes = [
     redirectTo: '/tabs/tabone',
     pathMatch:'full'
   },
+  // {
+  //   path: 'post',
+  //   loadChildren: () => import('./pages/post/post.module').then( m => m.PostPageModule)
+  // },
 ];
 
 @NgModule({

@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="primary" hideBackButton="true">
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" (click)="goBack()"></ion-icon>
+    </ion-buttons>
+    <ion-title>Post</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="nopost== false">
+    <ion-card *ngFor=" let item of displayPost">
+      <ion-card-header>
+        <ion-card-title class="title">{{username}}</ion-card-title>
+        <ion-card-subtitle> on {{item.date1}} at {{item.timestamp}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        {{item.post}}
+      </ion-card-content>
+      <ion-button expand="block" color="primary" (click)="share()">
+        <ion-icon name="share-alt"></ion-icon>share
+      </ion-button>
+    </ion-card>
+  </div>
+
+  <div *ngIf="nopost== true">
+    <ion-chip color="danger">
+      <ion-label>
+        <ion-icon name="nuclear"></ion-icon> This post has been deleted by {{username}}
+      </ion-label>
+    </ion-chip>
+  </div>
+</ion-content>

@@ -17,7 +17,7 @@ export class ProfilePage implements OnInit {
   time;
   length: any;
   posts: any = [];
-  testarray: any = [];
+  
 
   constructor(public router: Router,
     public afAuth: AngularFireAuth,
@@ -58,11 +58,9 @@ export class ProfilePage implements OnInit {
     const snap = await dbref.once('value');
     if (snap.child(user).exists()) {
       const post = snap.child(user).val();
-      this.posts = (Object.values(post));
-      for (let i = 0; i < this.posts.length; i++) {
-        this.testarray[i] = this.posts[this.posts.length - i - 1];
-      }
-      return this.length = this.testarray.length;
+      this.posts = (Object.values(post)).reverse();
+      
+      return this.length = this.posts.length;
     }
     this.length = 0;
   }

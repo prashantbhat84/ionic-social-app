@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { Router } from '@angular/router';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-tabthree',
@@ -11,16 +13,27 @@ export class TabthreePage implements OnInit {
 
   notifications: any[];
   notlen: any;
-  testarray1: any = [];
+
 
   constructor(public afAuth: AngularFireAuth,
-    public data: AngularFireDatabase, ) { }
+    public data: AngularFireDatabase,
+    public router: Router,
+    private dataService: DataService ) { }
 
   ngOnInit() {
   }
 
   ionViewWillEnter() {
-    this.getusernotifications();
+  this.getusernotifications();
+  }
+
+  post(i){
+     let data={
+       id:this.notifications[i].ID,
+       userid:this.notifications[i].userid
+     }
+  this.dataService.setData(42, data);
+    this.router.navigateByUrl('/post/42');
   }
 
   async getusernotifications() {
@@ -30,10 +43,7 @@ export class TabthreePage implements OnInit {
     const snap = await dbref.once('value');
     if (snap.child(user).exists()) {
       const notify = snap.child(user).val();
-      this.notifications = (Object.values(notify));
-      for (let i = 0; i < this.notifications.length; i++) {
-        this.testarray1[i] = this.notifications[this.notifications.length - i - 1];
-      }
+      this.notifications = (Object.values(notify)).reverse();
       return this.notlen = this.notifications.length;
     }
     this.notlen = 0;

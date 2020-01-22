@@ -2,7 +2,7 @@
   <ion-content fullscreen>
     <ion-list>
       <div *ngIf="notlen !=0">
-        <ion-item *ngFor="let item of testarray1">
+        <ion-item *ngFor="let item of notifications , let i=index" (click)="post(i)">
           <ion-icon name="notifications" slot="start"></ion-icon>
           <ion-label color="medium">
             <h4> <span style="font-weight: bold;"> {{item.name}} </span> has added a post </h4>

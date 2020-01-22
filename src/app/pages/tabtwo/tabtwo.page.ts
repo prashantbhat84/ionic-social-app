@@ -90,10 +90,15 @@ export class TabtwoPage {
     const name = snap.val().fullname;
     let dt = new Date();
     // console.log(this.time_ago(new Date(Date.now() -this.times);
+    const rand= Math.random();
+     const dt1= Date.now();
+     const ID=Math.round(rand + dt1);
+  
     dbpost.push({
       post,
       date1: dt.getDate() + '/' + dt.getMonth() + 1 + '/' + dt.getFullYear(),
-      timestamp: dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds()
+      timestamp: dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds(),
+      ID
     });
     const dbfeed = dbref.child('/feeds/');
     dbfeed.push({
@@ -108,7 +113,9 @@ export class TabtwoPage {
       notref.push({
         name,
         date1: dt.getDate() + '/' + dt.getMonth() + 1 + '/' + dt.getFullYear(),
-        timestamp: dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds()
+        timestamp: dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds(),
+        ID,
+        userid:user
       })
     })
    
