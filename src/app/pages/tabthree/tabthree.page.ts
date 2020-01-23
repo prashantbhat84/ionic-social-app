@@ -13,26 +13,26 @@ export class TabthreePage implements OnInit {
 
   notifications: any[];
   notlen: any;
+  numberofnotifications: any;
+
 
 
   constructor(public afAuth: AngularFireAuth,
     public data: AngularFireDatabase,
     public router: Router,
-    private dataService: DataService ) { }
+    private dataService: DataService) { }
 
   ngOnInit() {
   }
-
   ionViewWillEnter() {
-  this.getusernotifications();
+    this.getusernotifications();
   }
-
-  post(i){
-     let data={
-       id:this.notifications[i].ID,
-       userid:this.notifications[i].userid
-     }
-  this.dataService.setData(42, data);
+  post(i) {
+    let data = {
+      id: this.notifications[i].ID,
+      userid: this.notifications[i].userid
+    }
+    this.dataService.setData(42, data);
     this.router.navigateByUrl('/post/42');
   }
 
@@ -44,11 +44,14 @@ export class TabthreePage implements OnInit {
     if (snap.child(user).exists()) {
       const notify = snap.child(user).val();
       this.notifications = (Object.values(notify)).reverse();
+
       return this.notlen = this.notifications.length;
+
     }
     this.notlen = 0;
 
   }
+
 
 }
 

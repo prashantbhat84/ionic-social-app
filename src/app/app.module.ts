@@ -24,6 +24,7 @@ import { TabsPage } from './pages/tabs/tabs.page';
 import { FollowersPage} from './pages/followers/followers.page';
 import {FollowingPage} from './pages/following/following.page';
 import { PostPage } from './pages/post/post.page';
+import { Network } from '@ionic-native/network/ngx';
 
 
 
@@ -48,6 +49,8 @@ import { PostPage } from './pages/post/post.page';
     MediaCapture,
     File,
     Media,
+    Network
+    
 
     
   ],

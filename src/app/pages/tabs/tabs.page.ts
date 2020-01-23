@@ -22,7 +22,6 @@ export class TabsPage implements OnInit {
       return this.numberofnotifications = snap.child(user).numChildren();
     }
     this.numberofnotifications = 0;
-
   }
 
   constructor(

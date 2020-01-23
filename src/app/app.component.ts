@@ -6,6 +6,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { ViewChild } from '@angular/core';
 import { IonRouterOutlet } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { Network } from '@ionic-native/network/ngx';
+import { AlertController } from '@ionic/angular';
+
 
 
 @Component({
@@ -31,8 +34,17 @@ export class AppComponent {
     private statusBar: StatusBar,
     public afAuth: AngularFireAuth,
     private router: Router,
+    public network: Network,
+    public alert: AlertController,
 
   ) {
+
+    this.network.onDisconnect().subscribe(()=>{
+      setTimeout(()=>{
+      this.showAlert("Network Error ", "Please Check Your Connection and Try again");
+      },3000);
+    });
+
     this.initializeApp();
     this.platform.backButton.subscribeWithPriority(0, () => {
       if (this.routerOutlet && this.routerOutlet.canGoBack()) {
@@ -52,6 +64,20 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  async showAlert(header: string, message: string) {
+    const alert = await this.alert.create({
+      header,
+      message,
+      buttons: [{
+        text: 'Ok',
+        handler: () => {
+          navigator['app'].exitApp();
+        }}]
+    })
+
+    await alert.present()
   }
 
 }
