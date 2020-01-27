@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-profile',
@@ -22,6 +23,7 @@ export class ProfilePage implements OnInit {
   constructor(public router: Router,
     public afAuth: AngularFireAuth,
     public data: AngularFireDatabase,
+    private dataService: DataService
   ) { }
 
 
@@ -33,6 +35,15 @@ export class ProfilePage implements OnInit {
   }
   goBack() {
     this.router.navigate(['/tabs/tabfour'], { replaceUrl: true });
+  }
+
+  share(i) {
+    let data = {
+      id: this.posts[i].ID,
+      userid: this.afAuth.auth.currentUser.uid
+    }
+    this.dataService.setData(42, data);
+    this.router.navigateByUrl('/share/42');
   }
   ngOnInit() { }
 

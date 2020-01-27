@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { ActivatedRoute, } from '@angular/router';
+import { DataService } from '../../services/data.service';
 @Component({
   selector: 'app-post',
   templateUrl: './post.page.html',
@@ -15,11 +16,12 @@ export class PostPage implements OnInit {
   displayObj: any;
   username: any;
   nopost: Boolean;
-
+ 
   constructor(public router: Router,
     public afAuth: AngularFireAuth,
     public data: AngularFireDatabase,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dataService: DataService
   ) { }
 
   ngOnInit() {
@@ -56,10 +58,22 @@ export class PostPage implements OnInit {
       }
     }
     else {
-      this.nopost = true; // no post for a purticluar user.    
+      this.nopost =false; // no post for a purticluar user.    
     }
   }
   goBack() {
     this.router.navigate(['/tabs/tabthree'], { replaceUrl: true });
   }
+  // share(i) {
+  //   let id;
+  //   this.displayPost.map(post=>{
+  //     id=post.ID;      
+  //   })
+  //       let data = {
+  //     id: id,
+  //     userid: this.afAuth.auth.currentUser.uid
+  //   }
+  //   this.dataService.setData(42, data);
+  //   this.router.navigateByUrl('/share/42');
+  // }
 }

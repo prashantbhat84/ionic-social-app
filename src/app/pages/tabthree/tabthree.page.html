@@ -1,11 +1,14 @@
 <ion-app>
   <ion-content fullscreen>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <ion-list>
       <div *ngIf="notlen !=0">
         <ion-item *ngFor="let item of notifications , let i=index" (click)="post(i)">
           <ion-icon name="notifications" slot="start"></ion-icon>
           <ion-label color="medium">
-            <h4> <span style="font-weight: bold;"> {{item.name}} </span> has added a post </h4>
+            <h4> <span style="font-weight: bold;"> {{item.name}} </span> has {{item.action}} a post </h4>
             <p>on {{item.date1}} at {{item.timestamp}}</p>
           </ion-label>
         </ion-item>

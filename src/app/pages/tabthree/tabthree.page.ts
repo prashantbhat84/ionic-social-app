@@ -27,6 +27,8 @@ export class TabthreePage implements OnInit {
   ionViewWillEnter() {
     this.getusernotifications();
   }
+ 
+  
   post(i) {
     let data = {
       id: this.notifications[i].ID,
@@ -36,11 +38,21 @@ export class TabthreePage implements OnInit {
     this.router.navigateByUrl('/post/42');
   }
 
-  async getusernotifications() {
+  doRefresh(event) {
+    console.log('Begin async operation');
+    this.getusernotifications();
 
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
+
+  async getusernotifications() {   
     const user = this.afAuth.auth.currentUser.uid;
     const dbref = this.data.database.ref('/notifications/');
     const snap = await dbref.once('value');
+           
     if (snap.child(user).exists()) {
       const notify = snap.child(user).val();
       this.notifications = (Object.values(notify)).reverse();

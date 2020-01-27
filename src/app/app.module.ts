@@ -21,16 +21,17 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { TabsPage } from './pages/tabs/tabs.page';
-import { FollowersPage} from './pages/followers/followers.page';
-import {FollowingPage} from './pages/following/following.page';
+import { FollowersPage } from './pages/followers/followers.page';
+import { FollowingPage } from './pages/following/following.page';
 import { PostPage } from './pages/post/post.page';
 import { Network } from '@ionic-native/network/ngx';
+import { SharePage } from './pages/share/share.page';
 
 
 
 
 @NgModule({
-  declarations: [AppComponent, PeoplePage, ProfilePage, LoginPage, SignupPage, ForgotpasswordPage,TabsPage,FollowersPage,FollowingPage,PostPage],
+  declarations: [AppComponent, PeoplePage, ProfilePage, LoginPage, SignupPage, ForgotpasswordPage, TabsPage, FollowersPage, FollowingPage, PostPage, SharePage],
   entryComponents: [],
   imports: [BrowserModule,
     IonicModule.forRoot(),
@@ -40,7 +41,7 @@ import { Network } from '@ionic-native/network/ngx';
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFireStorageModule
-    
+
   ],
   providers: [
     StatusBar,
@@ -50,10 +51,10 @@ import { Network } from '@ionic-native/network/ngx';
     File,
     Media,
     Network
-    
 
-    
+
+
   ],
-  bootstrap: [AppComponent,PostPage]
+  bootstrap: [AppComponent, PostPage]
 })
 export class AppModule { }

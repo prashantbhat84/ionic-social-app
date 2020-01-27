@@ -14,6 +14,7 @@ export class FollowersPage implements OnInit {
   tasks: any = [];
   following: any = [];
   stats: any = [];
+  isfollowing:any=[];
 
   constructor(public router: Router,
     public afAuth: AngularFireAuth,
@@ -21,10 +22,31 @@ export class FollowersPage implements OnInit {
     public data: AngularFireDatabase, ) { }
 
   ngOnInit() {
+    
   }
 
   ionViewWillEnter() {
     this.followers();
+    this.getuserfollowing();
+
+  }
+  ionViewDidEnter(){
+    // this.getfollowerstats();
+    
+  }
+  
+ async  getuserfollowing(){
+    const user = this.afAuth.auth.currentUser.uid;
+    const dbref = this.data.database.ref('/following/');
+    const snap = await dbref.once('value');
+           
+    if (snap.child(user).exists()) {
+      const notify = snap.child(user).val();
+       
+      this.following = (Object.values(notify)).reverse();
+
+      console.log(this.following);
+    }
   }
   getstats() {
     let smallerarray: any = [];
@@ -77,6 +99,22 @@ export class FollowersPage implements OnInit {
     }
 
   }
+  // getfollowerstats() {
+
+  //   var match = [];
+  //   for (var i = 0; i < this.tasks.length; i++) {
+
+  //     for (var j = 0; j < this.following.length; j++) {
+  //       if (this.tasks[i] == this.following[j]) {
+  //         match[i] = true;
+  //       }
+  //       else {
+  //         match[i] = false;
+  //       }
+  //     }
+  //   }
+  //   console.log(match)
+  // }
 
   //   async getfreinds(){
   //     console.log('get fre');

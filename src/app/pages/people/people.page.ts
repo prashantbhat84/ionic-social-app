@@ -64,7 +64,6 @@ export class PeoplePage implements OnInit {
       })
       let filteredarray = this.people.filter(val => val.id !== this.afAuth.auth.currentUser.uid);
       this.tasks = filteredarray;
-
     })
   }
   getfollowinguser() {
