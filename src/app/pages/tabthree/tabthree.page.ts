@@ -26,13 +26,20 @@ export class TabthreePage implements OnInit {
   }
   ionViewWillEnter() {
     this.getusernotifications();
+  
+  }
+  ionViewDidEnter(){
+    
+    
   }
  
   
   post(i) {
     let data = {
       id: this.notifications[i].ID,
-      userid: this.notifications[i].userid
+      userid: this.notifications[i].userid,
+      ownerid:this.notifications[i].ownerid,
+      ownername:this.notifications[i].ownername
     }
     this.dataService.setData(42, data);
     this.router.navigateByUrl('/post/42');
@@ -52,11 +59,10 @@ export class TabthreePage implements OnInit {
     const user = this.afAuth.auth.currentUser.uid;
     const dbref = this.data.database.ref('/notifications/');
     const snap = await dbref.once('value');
-           
-    if (snap.child(user).exists()) {
+               if (snap.child(user).exists()) {
       const notify = snap.child(user).val();
       this.notifications = (Object.values(notify)).reverse();
-
+      console.log(this.notifications);
       return this.notlen = this.notifications.length;
 
     }

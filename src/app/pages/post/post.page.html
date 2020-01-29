@@ -8,10 +8,10 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="nopost== false">
+  <div *ngIf="nopost== false && poststatus==true">
     <ion-card *ngFor=" let item of displayPost">
       <ion-card-header>
-        <ion-card-title class="title">{{username}}</ion-card-title>
+        <ion-card-title class="title">{{ownername}}</ion-card-title>
         <ion-card-subtitle> on {{item.date1}} at {{item.timestamp}}</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
@@ -21,6 +21,27 @@
         <ion-icon name="share-alt"></ion-icon>share
       </ion-button>
     </ion-card>
+  </div>
+
+  <div *ngIf="nopost== false && poststatus==false">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle> <span class="title">{{username}}</span> has shared <span class="title">{{ownername}}</span> ' s post</ion-card-subtitle>
+       
+      </ion-card-header>
+    <ion-card *ngFor=" let item of displayPost">
+      <ion-card-header>
+        <ion-card-title class="title">{{ownername}}</ion-card-title>
+        <ion-card-subtitle> on {{item.date1}} at {{item.timestamp}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        {{item.post}}
+      </ion-card-content>
+      <ion-button expand="block" color="primary" (click)="share(i)">
+        <ion-icon name="share-alt"></ion-icon>share
+      </ion-button>
+    </ion-card>
+  </ion-card>
   </div>
 
   <div *ngIf="nopost== true">

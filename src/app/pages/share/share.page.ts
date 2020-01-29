@@ -31,6 +31,7 @@ export class SharePage implements OnInit {
     this.getuser();
     if (this.route.snapshot.data['special']) {
       this.importedData = this.route.snapshot.data['special'];
+      //.log(this.importedData);
     }
   }
 
@@ -53,10 +54,11 @@ export class SharePage implements OnInit {
 
   send(i,name){
   let currentuserid= this.importedData.userid;
-  let postid= this.importedData.id;
+  let postid= this.importedData.postid;
+  let ownerid= this.importedData.ownerid;
+  let ownername=this.importedData.ownername;
   let dt = new Date();   
-    console.log(this.tasks[i].id);
-    console.log(name);
+    
     let dbref=this.data.database.ref('/users/'+currentuserid);
     dbref.once('value',(snap)=>{
       console.log(snap.val().fullname);
@@ -67,7 +69,9 @@ export class SharePage implements OnInit {
          timestamp: dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds(),
          ID:postid,
          userid:currentuserid,
-         action:'shared'
+         action:'shared',
+         ownerid:ownerid,
+         ownername:ownername
       })
       
     })

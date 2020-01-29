@@ -26,14 +26,16 @@ export class PeoplePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getfollowinguser();
-    this.getuser();
+   
     this.platform.backButton.subscribe(() => {
     });
   }
 
   ionViewWillEnter() {
     // this.getfollowinguser();
+    this.getfollowinguser();
+    this.getuser();
+   setTimeout(()=>{
     for (let i = 0; i < this.tasks.length; i++) {
       if (this.followinguser.includes(this.tasks[i].id)) {
         this.followstatus[i] = true;
@@ -43,6 +45,7 @@ export class PeoplePage implements OnInit {
       }
     }
     console.log(this.followstatus);
+   },500);
   }
 
   goBack() {

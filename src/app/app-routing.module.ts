@@ -14,41 +14,8 @@ import { SharePage} from './pages/share/share.page';
 import { DataResolverService } from './resolver/data-resolver.service';
 
 
-
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  // { path: '', loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule) },
-  { path: 'people', component: PeoplePage },
-  { path: 'profile', component: ProfilePage },
-  { path: 'login', component: LoginPage ,},
-  { path: 'signup', component: SignupPage },
-  { path: 'forgotpassword', component: ForgotpasswordPage },
-  {path: 'followers', component: FollowersPage},
-  {path: 'following', component: FollowingPage},
-  {
-    path: 'post/:id',
-    resolve: {
-      special: DataResolverService
-    },
-    component: PostPage
-  },
 
-  {
-    path: 'share/:id',
-    resolve: {
-      special: DataResolverService
-    },
-    component: SharePage
-  },
-
-
-  // {
-  //   path: 'post/:id',
-  //   resolve: {
-  //     special: DataResolverService
-  //   },
-  //   loadChildren:'./pages/post/post.module#PostPageModule'
-  // },
   {
     path: 'tabs',
     component: TabsPage,
@@ -71,21 +38,34 @@ const routes: Routes = [
       },
     ]
   },
-  // {
-  //   path: 'tabs',
-  //   redirectTo: '/tabs/tabone',
-  //   pathMatch:'full'
-  // },
-  // {
-  //   path: 'share',
-  //   loadChildren: () => import('./pages/share/share.module').then( m => m.SharePageModule)
-  // },
+
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'people', component: PeoplePage },
+  { path: 'profile', component: ProfilePage },
+  { path: 'login', component: LoginPage ,},
+  { path: 'signup', component: SignupPage },
+  { path: 'forgotpassword', component: ForgotpasswordPage },
+  {path: 'followers', component: FollowersPage},
+  {path: 'following', component: FollowingPage},
+  {
+    path: 'post/:id',
+    resolve: {
+      special: DataResolverService
+    },
+    component: PostPage
+  },
+
+  {
+    path: 'share/:id',
+    resolve: {
+      special: DataResolverService
+    },
+    component: SharePage
+  },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
-  ],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

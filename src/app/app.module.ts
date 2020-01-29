@@ -41,7 +41,6 @@ import { SharePage } from './pages/share/share.page';
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFireStorageModule
-
   ],
   providers: [
     StatusBar,
@@ -51,10 +50,7 @@ import { SharePage } from './pages/share/share.page';
     File,
     Media,
     Network
-
-
-
   ],
-  bootstrap: [AppComponent, PostPage]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -84,7 +84,7 @@ export class TabtwoPage {
   async savePost(post) {
     const user = this.afAuth.auth.currentUser.uid;
     const dbref = this.data.database.ref();
-    const dbpost = dbref.child('/posts/' + user);
+    
     const dbname = dbref.child('/users/' + user);
     const snap = await dbname.once('value');
     const name = snap.val().fullname;
@@ -93,8 +93,10 @@ export class TabtwoPage {
     const rand= Math.random();
      const dt1= Date.now();
      const ID=Math.round(rand + dt1);
+     console.log(ID);
+     const dbpost = dbref.child('/posts/' + user+"/"+ID);
   
-    dbpost.push({
+    dbpost.set({
       post,
       date1: dt.getDate() + '/' + dt.getMonth() + 1 + '/' + dt.getFullYear(),
       timestamp: dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds(),
@@ -102,10 +104,12 @@ export class TabtwoPage {
     });
     const dbfeed = dbref.child('/feeds/');
     dbfeed.push({
-      id: user,
-      post,
+ownerid:user,
       date1: dt.getDate() + '/' + dt.getMonth() + 1 + '/' + dt.getFullYear(),
-      timestamp: dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds()
+      timestamp: dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds(),
+      ownername:name,
+      postid:ID,
+      userid:user
 
     });
     this.followerslist.map(follower => {
@@ -116,7 +120,10 @@ export class TabtwoPage {
         timestamp: dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds(),
         ID,
         userid:user,
-        action:'added'
+        action:'added',
+        ownerid:user,
+        ownername:name
+        
       })
     })
    

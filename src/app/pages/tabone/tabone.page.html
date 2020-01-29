@@ -1,14 +1,41 @@
 
 
  <ion-content fullscreen>
-  <ion-card>
-    <!-- <img src="https://raw.githubusercontent.com/ionic-team/ionic-docs/master/src/demos/api/card/madison.jpg" /> -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="nofeeds == false">
+  <ion-card  *ngFor=" let item of sortedfeeds let i=index">
     <ion-card-header>
-      <ion-card-subtitle>{{name}}</ion-card-subtitle>
-      <ion-card-title>Madison, WI</ion-card-title>
+      <ion-card-title class="title">{{item.ownername}}</ion-card-title>
+      <ion-card-subtitle> on {{item.date1}} at {{item.timestamp}}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      Founded in 1829 on an isthmus between Lake Monona and Lake Mendota, Madison was named the capital of the Wisconsin Territory in 1836.
+      {{item.post}}
     </ion-card-content>
+    <ion-button expand="block" color="primary" (click)="share(i)">
+      <ion-icon name="share-alt"></ion-icon>share
+    </ion-button>
   </ion-card>
+  </div>
+  <div *ngIf="nofeeds == true">
+    <ion-grid style="height: 100%">
+      <ion-row class="ion-align-items-center ion-justify-content-center" style="height: 100%; margin-top: 50%;">
+       No Feeds
+      </ion-row>
+    </ion-grid>
+  </div>
+<!-- 
+  <ion-card *ngFor=" let item of displayPost">
+    <ion-card-header>
+      <ion-card-title class="title">{{ownername}}</ion-card-title>
+      <ion-card-subtitle> on {{item.date1}} at {{item.timestamp}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      {{item.post}}
+    </ion-card-content>
+    <ion-button expand="block" color="primary" (click)="share(i)">
+      <ion-icon name="share-alt"></ion-icon>share
+    </ion-button>
+  </ion-card> -->
 </ion-content>

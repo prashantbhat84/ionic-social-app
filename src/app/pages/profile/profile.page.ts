@@ -39,8 +39,10 @@ export class ProfilePage implements OnInit {
 
   share(i) {
     let data = {
-      id: this.posts[i].ID,
-      userid: this.afAuth.auth.currentUser.uid
+      postid: this.posts[i].ID,
+      userid: this.afAuth.auth.currentUser.uid,
+      ownerid:this.afAuth.auth.currentUser.uid,
+      ownername:name
     }
     this.dataService.setData(42, data);
     this.router.navigateByUrl('/share/42');

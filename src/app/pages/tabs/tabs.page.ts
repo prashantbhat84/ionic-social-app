@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { RouterOutlet, Router, ActivationStart } from '@angular/router';
 
 @Component({
   selector: 'app-tabs',
@@ -8,11 +9,15 @@ import { AngularFireDatabase } from '@angular/fire/database';
   styleUrls: ['./tabs.page.scss'],
 })
 export class TabsPage implements OnInit {
-  numberofnotifications: any;
+
+  @ViewChild(RouterOutlet, {static: false}) outlet: RouterOutlet;
+
 
   ionViewWillEnter() {
     this.getNotificationCount();
   }
+
+  numberofnotifications: any;
 
   async getNotificationCount() {
     const user = this.afAuth.auth.currentUser.uid;
@@ -27,12 +32,18 @@ export class TabsPage implements OnInit {
   constructor(
     public afAuth: AngularFireAuth,
     public data: AngularFireDatabase,
+    private router: Router
   ) { }
-  home() {
 
+  ngOnInit(): void {
+    this.router.events.subscribe(e => {
+      if (e instanceof ActivationStart && e.snapshot.outlet === "administration")
+        this.outlet.deactivate();
+    });
   }
-  recordings() {
 
+  home() {  }
+  recordings() {
   }
   notifications() {
     this.numberofnotifications = 0;
@@ -40,6 +51,5 @@ export class TabsPage implements OnInit {
   menu() {
 
   }
-  ngOnInit() {
-  }
+ 
 }

@@ -16,6 +16,8 @@ export class PostPage implements OnInit {
   displayObj: any;
   username: any;
   nopost: Boolean;
+  ownername:any;
+  poststatus:Boolean;
  
   constructor(public router: Router,
     public afAuth: AngularFireAuth,
@@ -30,12 +32,30 @@ export class PostPage implements OnInit {
     }
   }
   ionViewWillEnter() {
+   
     this.getdata();
+    this.getowner();
     this.getuser();
+    
+  }
+  ionViewDidEnter(){
+    setTimeout(()=>{
+      this.getPostStatus();
+    },500)
+  }
+  getPostStatus(){
+   if(this.username==this.ownername){
+     this.poststatus=true;
+   }
+   else{
+     this.poststatus=false;
+   }
+   console.log(this.poststatus);
   }
 
-  ionViewDidEnter() { }
-  async getuser() {
+ 
+    
+  async getuser(){
     const user = this.importedData.userid;
     const dbref = this.data.database.ref('/users/');
     const snap = await dbref.once('value');
@@ -43,16 +63,31 @@ export class PostPage implements OnInit {
       const notify = snap.child(user).val();
       this.username = notify.fullname;
     }
+   }
+
+  async getowner() {
+    const user = this.importedData.ownerid;
+    const dbref = this.data.database.ref('/users/');
+    const snap = await dbref.once('value');
+    if (snap.child(user).exists()) {
+      const notify = snap.child(user).val();
+      this.ownername = notify.fullname;
+    }
   }
+
   async getdata() {
-    const user = this.importedData.userid;
+    const user = this.importedData.ownerid;
     const dbref = this.data.database.ref('/posts/');
     this.nopost = false;
     const snap = await dbref.once('value');
+    console.log(snap.child(user).exists());
+    
     if (snap.child(user).exists()) {
       const notify = snap.child(user).val();
       this.posts = (Object.values(notify));
       this.displayPost = this.posts.filter(post => post.ID === this.importedData.id);
+      console.log(this.displayPost.length);
+      
       if (this.displayPost.length === 0) {
         this.nopost = true;
       }
@@ -61,19 +96,23 @@ export class PostPage implements OnInit {
       this.nopost =false; // no post for a purticluar user.    
     }
   }
+
   goBack() {
     this.router.navigate(['/tabs/tabthree'], { replaceUrl: true });
   }
-  // share(i) {
-  //   let id;
-  //   this.displayPost.map(post=>{
-  //     id=post.ID;      
-  //   })
-  //       let data = {
-  //     id: id,
-  //     userid: this.afAuth.auth.currentUser.uid
-  //   }
-  //   this.dataService.setData(42, data);
-  //   this.router.navigateByUrl('/share/42');
-  // }
+
+  share(i) {
+    let id;
+    this.displayPost.map(post=>{
+      id=post.ID;      
+    })
+      let data = {
+      postid: id,
+      userid: this.afAuth.auth.currentUser.uid,
+      ownerid:this.importedData.ownerid,
+      ownername:this.username
+    }
+    this.dataService.setData(42, data);
+    this.router.navigateByUrl('/share/42');
+  }
 }
