@@ -26,26 +26,24 @@ export class PeoplePage implements OnInit {
   ) { }
 
   ngOnInit() {
-   
     this.platform.backButton.subscribe(() => {
     });
   }
 
   ionViewWillEnter() {
-    // this.getfollowinguser();
     this.getfollowinguser();
     this.getuser();
-   setTimeout(()=>{
-    for (let i = 0; i < this.tasks.length; i++) {
-      if (this.followinguser.includes(this.tasks[i].id)) {
-        this.followstatus[i] = true;
+    setTimeout(() => {
+      for (let i = 0; i < this.tasks.length; i++) {
+        if (this.followinguser.includes(this.tasks[i].id)) {
+          this.followstatus[i] = true;
+        }
+        else {
+          this.followstatus[i] = false;
+        }
       }
-      else {
-        this.followstatus[i] = false;
-      }
-    }
-    console.log(this.followstatus);
-   },500);
+
+    }, 500);
   }
 
   goBack() {
@@ -54,7 +52,7 @@ export class PeoplePage implements OnInit {
 
   clicked(i) {
     this.follow(this.tasks[i].id);
-    console.log(i);
+
   }
 
   getuser() {
@@ -74,12 +72,12 @@ export class PeoplePage implements OnInit {
     const uref = dataref.child('/following/' + this.afAuth.auth.currentUser.uid);
     let dummy = [];
     uref.once("value", snap => {
-      dummy = Object.values(snap.val());
-      console.log(dummy);
-      dummy.map(dum => {
-        this.followinguser.push(dum.id);
-      })
-      console.log(this.followinguser);
+      if (snap.exists()) {
+        dummy = Object.values(snap.val());
+        dummy.map(dum => {
+          this.followinguser.push(dum.id);
+        })
+      }
     })
   }
 
@@ -87,10 +85,8 @@ export class PeoplePage implements OnInit {
     let user = id;
     let name;
     let dbref = this.data.database.ref('/users/' + user);
-    console.log(dbref);
     dbref.once('value', snap => {
       name = snap.val().fullname;
-      console.log(name);
       let dataref = this.data.database.ref();
       let noderef = dataref.child('/' + node + '/' + nodeid + '/' + id)
       noderef.set({
@@ -101,29 +97,35 @@ export class PeoplePage implements OnInit {
   }
 
   unfollow(i) {
-    console.log('inside unfollow');
+
     this.followstatus[i] = false;
     let following = 'following'
     let followerid = this.tasks[i].id;
     let followingid = this.afAuth.auth.currentUser.uid;
     let reference = this.data.database.ref('/following/').child(followingid).child(followerid);
     reference.remove().then(() => {
-      console.log('removed');
     });
     let refer = this.data.database.ref('/followers/').child(followerid).child(followingid);
     refer.remove().then(() => {
-      console.log('removed followers');
+
     })
   }
 
   follow(i) {
     this.followstatus[i] = false;
     let reference1 = this.data.database.ref('/following/' + this.afAuth.auth.currentUser.uid);
-    console.log(reference1);
     let followerid = i;
     let followingid = this.afAuth.auth.currentUser.uid;
     this.getuserdetails(followerid, 'following', followingid);
     this.getuserdetails(followingid, 'followers', followerid);
     this.getfollowinguser();
   }
+
+  doRefresh(event) {
+    this.goBack();
+    setTimeout(() => {
+      event.target.complete();
+    }, 2000);
+  }
+
 }

@@ -11,64 +11,65 @@ import { AngularFireDatabase } from '@angular/fire/database';
 export class FollowersPage implements OnInit {
 
   follow: any = [];
-  tasks: any = [];
+  tasks: any = []; // followers array
   following: any = [];
   stats: any = [];
   isfollowing:any=[];
+  hasfollowers:Boolean;
+  hasfollowing:Boolean;
+  nofollowers:Boolean;
+  nofollowing:Boolean;
+  
 
   constructor(public router: Router,
     public afAuth: AngularFireAuth,
     public store: AngularFireStorage,
     public data: AngularFireDatabase, ) { }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() {   }
 
   ionViewWillEnter() {
     this.followers();
     this.getuserfollowing();
-
+    setTimeout(() => {
+      if (this.hasfollowers == true && this.hasfollowing == true) {
+        this.getstats();
+      }
+      console.log(this.hasfollowing);
+    console.log(this.hasfollowers);   
+    }, 1000);
   }
-  ionViewDidEnter(){
-    // this.getfollowerstats();
-    
-  }
+ 
   
  async  getuserfollowing(){
     const user = this.afAuth.auth.currentUser.uid;
     const dbref = this.data.database.ref('/following/');
-    const snap = await dbref.once('value');
-           
+    const snap = await dbref.once('value');           
     if (snap.child(user).exists()) {
       const notify = snap.child(user).val();
-       
-      this.following = (Object.values(notify)).reverse();
-
+             this.following = (Object.values(notify)).reverse();
+     console.log('following');
       console.log(this.following);
+      this.hasfollowing=this.following.length!=0?true:false;
+      console.log(this.hasfollowing);
     }
   }
-  getstats() {
-    let smallerarray: any = [];
-    let largerarray: any = [];
-    console.log(this.tasks);
-    console.log(this.following);
-  }
-  getFollowing() {
-    let test: any[] = []
-    const databaseref = this.data.database.ref('/following/' + this.afAuth.auth.currentUser.uid);
-    databaseref.once("value", (snapshot) => {
-      snapshot.forEach(child => {
-        let values = (child.val());
-        test.push(values);
-        //console.log(test); 
-        test.map(t1 => {
-          this.following.push(t1.id);
-        })
-        this.getstats();
 
-      })
+  getstats() {
+    console.log('getstats');
+    let taskid = [];
+    let folowingid = [];
+    this.tasks.map(task => {
+      taskid.push(task.id);
     });
+    this.following.map(foll => {
+      folowingid.push(foll.id)
+    });
+    taskid.map(task => {
+      const test = (folowingid.includes(task));
+      this.isfollowing.push(test);
+    });
+    console.log(this.isfollowing);
   }
 
   goBack() {
@@ -83,7 +84,10 @@ export class FollowersPage implements OnInit {
         this.follow.push(values);
         console.log(this.follow);
         this.tasks = this.follow;
-        console.log(this.tasks);
+        console.log(this.tasks.length);
+       this.hasfollowers=this.tasks.length!=0? true:false;
+       console.log(this.hasfollowers);
+       
       })
     })
   }
@@ -93,67 +97,49 @@ export class FollowersPage implements OnInit {
       let user = this.afAuth.auth.currentUser.uid;
       let followerref = this.data.database.ref('/followers/' + user);
       const followerstats = await followerref.child(i).remove();
+      let followingref=this.data.database.ref('/following/'+i);
+      const followingstats=await followingref.child(user).remove();
       this.goBack();
     } catch (error) {
       console.log(error);
     }
-
   }
-  // getfollowerstats() {
 
-  //   var match = [];
-  //   for (var i = 0; i < this.tasks.length; i++) {
+  async followback(i){
+    console.log("followback");
+    let reference1 = this.data.database.ref('/following/' + this.afAuth.auth.currentUser.uid);
+    console.log(reference1);
+    let followerid = i;
+    let followingid = this.afAuth.auth.currentUser.uid;
+    this.getuserdetails(followerid, 'following', followingid);
+    this.getuserdetails(followingid, 'followers', followerid);
+  }
 
-  //     for (var j = 0; j < this.following.length; j++) {
-  //       if (this.tasks[i] == this.following[j]) {
-  //         match[i] = true;
-  //       }
-  //       else {
-  //         match[i] = false;
-  //       }
-  //     }
-  //   }
-  //   console.log(match)
-  // }
 
-  //   async getfreinds(){
-  //     console.log('get fre');
-  // let array1=[],array2=[];
-  //     const user=this.afAuth.auth.currentUser.uid;
-  //     const dbref= this.data.database.ref('/followers/'+user);
-  //        const snap= await dbref.once('value');
-  //          console.log(snap.exists());
-  //            console.log(snap.key);
+  getuserdetails(id, node, nodeid) {
+    let user = id;
+    let name;
+    let dbref = this.data.database.ref('/users/' + user);
+    console.log(dbref);
+    dbref.once('value', snap => {
+      name = snap.val().fullname;
+      console.log(name);
+      let dataref = this.data.database.ref();
+      let noderef = dataref.child('/' + node + '/' + nodeid + '/' + id)
+      noderef.set({
+        id: id,
+        name: name,
+      })
+    })
+  }
 
-  // if(dbref!==null){
-  //       const foll= await dbref.once('value');
-  // const foll1=(Object.values(foll.val()));
-  //         foll1.map(f=>{
-  //           array1.push(f);
-  //         });
-  //       //console.log(array1);
-  //       array1.map(arr=>{
-  //         // this.tasks.push(arr.id);
-  //       console.log(arr.id);
-  //       });
-  //     }
-  //     else{
-  //       console.log('null');
-  //     }  
-  // }
-  // if(this.tasks.length>this.following.length){
-  //   largerarray=this.tasks;
-  //   smallerarray=this.following;
 
-  // }
-  // else{
-  //   largerarray=this.following;
-  //   smallerarray=this.tasks;
-  // }
-  // console.log(smallerarray);
-  // console.log(largerarray);
-  // for(let i=0; i<largerarray.length;i++){
-  // this.stats[i]=(smallerarray.includes(largerarray[i]));
-  // }
-  // console.log(this.stats);
+  doRefresh(event) {
+    console.log('Begin async operation');
+    this.goBack();  
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
 }

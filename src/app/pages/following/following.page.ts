@@ -10,7 +10,9 @@ import { AngularFireDatabase } from '@angular/fire/database';
 })
 export class FollowingPage implements OnInit {
   follow: any = [];
-  tasks: any
+  tasks: any;
+  notfollowing: Boolean;
+
   constructor(public router: Router,
     public afAuth: AngularFireAuth,
     public store: AngularFireStorage,
@@ -23,26 +25,46 @@ export class FollowingPage implements OnInit {
   goBack() {
     this.router.navigate(['/profile'], { replaceUrl: true });
   }
-  following() {
+  async  following() {
     const databaseref = this.data.database.ref('/following/' + this.afAuth.auth.currentUser.uid);
     databaseref.once("value", (snapshot) => {
-      snapshot.forEach(child => {
-        let values = (child.val());
-        this.follow.push(values);
-        console.log(this.follow);
-        this.tasks = this.follow;
-      })
+      if (snapshot.exists()) {
+        snapshot.forEach(child => {
+          let values = (child.val());
+          this.follow.push(values);
+          console.log(this.follow.length);
+          this.tasks = this.follow;
+        })
+
+      }
+      else {
+        this.notfollowing = true;
+      }
+
     })
+
+
   }
   async remove(i) {
     try {
       let user = this.afAuth.auth.currentUser.uid;
-      let followerref = this.data.database.ref('/following/' + user);
-      const followerstats = await followerref.child(i).remove();
+      let followingref = this.data.database.ref('/following/' + user);
+      const followingstats = await followingref.child(i).remove();
+      let followerref = this.data.database.ref('/followers/' + i);
+      const followerstats = await followerref.child(user).remove();
       this.goBack();
-      console.log("calling Following method");
     } catch (error) {
       console.log(error);
     }
   }
+
+  doRefresh(event) {
+    this.goBack();
+    setTimeout(() => {
+      event.target.complete();
+    }, 2000);
+  }
+
+
+
 }

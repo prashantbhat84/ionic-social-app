@@ -27,11 +27,17 @@ import { PostPage } from './pages/post/post.page';
 import { Network } from '@ionic-native/network/ngx';
 import { SharePage } from './pages/share/share.page';
 
+// import { TabonePageModule } from './pages/tabone/tabone.module';
+// import { TabtwoPageModule } from './pages/tabtwo/tabtwo.module';
+// import { TabthreePageModule } from './pages/tabthree/tabthree.module';
+// import { TabfourPageModule} from './pages/tabfour/tabfour.module';
+
 
 
 
 @NgModule({
-  declarations: [AppComponent, PeoplePage, ProfilePage, LoginPage, SignupPage, ForgotpasswordPage, TabsPage, FollowersPage, FollowingPage, PostPage, SharePage],
+  declarations: [AppComponent, PeoplePage, ProfilePage, LoginPage, SignupPage, ForgotpasswordPage, 
+    TabsPage, FollowersPage, FollowingPage, PostPage, SharePage],
   entryComponents: [],
   imports: [BrowserModule,
     IonicModule.forRoot(),
@@ -40,7 +46,8 @@ import { SharePage } from './pages/share/share.page';
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    
   ],
   providers: [
     StatusBar,

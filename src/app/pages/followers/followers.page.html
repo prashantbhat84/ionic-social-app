@@ -1,3 +1,4 @@
+<ion-content>
 <ion-header>
   <ion-toolbar color="primary" hideBackButton="true">
   <ion-buttons slot="start">
@@ -7,21 +8,41 @@
 </ion-toolbar>
 </ion-header>
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-list>
+    <div *ngIf="hasfollowers==undefined">
+      <ion-grid style="height: 100%">
+        <ion-row class="ion-align-items-center ion-justify-content-center" style="height: 100%; margin-top: 50%;">
+         No Followers
+        </ion-row>
+      </ion-grid>
+    </div>
+    <div *ngIf= "hasfollowers ==true && hasfollowing==true">
     <ion-item *ngFor="let item of tasks, let i= index"   lines="full">
      <ion-icon name="person" slot="start"></ion-icon>
-      <ion-label> {{item.name}}</ion-label>
-     
-      <ion-button color="primary" >
+      <ion-label> {{item.name}}</ion-label>     
+      <ion-button color="primary" (click)="followback(item.id)" *ngIf = "!isfollowing[i]" >
        Follow back
       </ion-button>
-
       <ion-button color="danger"(click)="remove(item.id)">
         Remove
-      </ion-button>
-     
-      
-
+      </ion-button>    
     </ion-item>
+  </div>
+
+  <div *ngIf= "hasfollowers ==true && hasfollowing==false">
+    <ion-item *ngFor="let item of tasks, let i= index"   lines="full">
+     <ion-icon name="person" slot="start"></ion-icon>
+      <ion-label> {{item.name}}</ion-label>     
+      <ion-button color="primary" (click)="followback(item.id)">
+       Follow back
+      </ion-button>
+      <ion-button color="danger"(click)="remove(item.id)">
+        Remove
+      </ion-button>    
+    </ion-item>
+  </div>
   </ion-list>
 </ion-content>

@@ -12,6 +12,10 @@ import { from } from 'rxjs';
 import { PostPage } from './pages/post/post.page';
 import { SharePage} from './pages/share/share.page';
 import { DataResolverService } from './resolver/data-resolver.service';
+// import { TabonePage } from './pages/tabone/tabone.page';
+// import { TabtwoPage } from './pages/tabtwo/tabtwo.page';
+// import { TabthreePage } from './pages/tabthree/tabthree.page';
+// import { TabfourPage } from './pages/tabfour/tabfour.page';
 
 
 const routes: Routes = [
@@ -22,18 +26,23 @@ const routes: Routes = [
     children: [
       {
         path: 'tabone',
+        // component:TabonePage,
         loadChildren: () => import('../app/pages/tabone/tabone.module').then(m => m.TabonePageModule)
       },
       {
         path: 'tabtwo',
+        // component:TabtwoPage,
         loadChildren: () => import('../app/pages/tabtwo/tabtwo.module').then(m => m.TabtwoPageModule)
+     
       },
       {
         path: 'tabthree',
+        // component:TabthreePage,
         loadChildren: () => import('../app/pages/tabthree/tabthree.module').then(m => m.TabthreePageModule)
       },
       {
         path: 'tabfour',
+        // component:TabfourPage,
         loadChildren: () => import('../app/pages/tabfour/tabfour.module').then(m => m.TabfourPageModule)
       },
     ]

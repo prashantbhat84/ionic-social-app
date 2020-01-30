@@ -5,6 +5,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Platform } from '@ionic/angular';
 import { ActivatedRoute, } from '@angular/router';
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'app-share',
@@ -23,7 +24,8 @@ export class SharePage implements OnInit {
     public store: AngularFireStorage,
     public data: AngularFireDatabase,
     public platform: Platform,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
 
   ) { }
 
@@ -49,7 +51,7 @@ export class SharePage implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/tabs/tabthree'], { replaceUrl: true });
+    this.location.back();
   }
 
   send(i,name){

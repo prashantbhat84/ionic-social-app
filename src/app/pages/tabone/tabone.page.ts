@@ -65,6 +65,8 @@ export class TabonePage implements OnInit {
 
   }
 
+  
+
 
   async showAlert(header: string, message: string) {
     const alert = await this.alert.create({
@@ -75,12 +77,9 @@ export class TabonePage implements OnInit {
     await alert.present()
   }
 
-  share(i) {
-    
-   
+  share(i) {  
     let data = {
-    
-      userid: this.sortedfeeds[i].userid,
+      userid: this.afAuth.auth.currentUser.uid,
       ownerid:this.sortedfeeds[i].ownerid,
       ownername:this.sortedfeeds[i].ownername,
       postid:this.sortedfeeds[i].postid
@@ -106,11 +105,9 @@ export class TabonePage implements OnInit {
     else {
       this.nofeeds = false;
       this.feeds = (Object.values(snap.val()));
-     
     }
-
-
   }
+
   async getfollowing() {
     let followingarray = [];
     const dbref = this.data.database.ref('/following/');
@@ -126,32 +123,30 @@ export class TabonePage implements OnInit {
   }
 
   async sortfeeds() {
-    
     let newarray = []
     let megedarray=[];
     let post=[];
     newarray = this.feeds.filter(item => this.targetarray.includes(item.ownerid));
-    
     this.sortedfeeds = newarray.reverse();
     //  get all post from  sorted feeds array
-    
    let posts=[];
-  
    this.sortedfeeds.map(feed=>{
-  
     const dbref = this.data.database.ref('/posts/'+feed.ownerid+'/'+feed.postid);
     dbref.once('value',snap=>{
       const p1=(snap.val());
-    
       const obj= Object.assign(feed,p1);
-      
-    })
+    })      
+  });     
+}
 
-     
+doRefresh(event) {
+  this.sortfeeds();
+  setTimeout(() => {
+    event.target.complete();
+  }, 2000);
+}
 
-          
-          
-        
+}
          
 // const p2=p1.filter(p=>feed.ID==p.postid)
 // console.log(p2);
@@ -166,8 +161,8 @@ export class TabonePage implements OnInit {
           //   post:p1
           // }
           // megedarray.push(obj);
-   });
-   console.log(megedarray)
+  
+  //  console.log(megedarray)
 
 
     // const snapshot = await dbref.once('value');
@@ -180,22 +175,4 @@ export class TabonePage implements OnInit {
     //   this.targetarray.push(this.user);
     // }
     
-
-
-    
-  
-    
-   
-  }
-
-  doRefresh(event) {
-    console.log('Begin async operation');
-    this.sortfeeds();
-
-    setTimeout(() => {
-      console.log('Async operation has ended');
-      event.target.complete();
-    }, 2000);
-  }
-  
-}
+ 
