@@ -104,7 +104,7 @@ export class TabtwoPage {
     });
     const dbfeed = dbref.child('/feeds/');
     dbfeed.push({
-ownerid:user,
+      ownerid:user,
       date1: dt.getDate() + '/' + dt.getMonth() + 1 + '/' + dt.getFullYear(),
       timestamp: dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds(),
       ownername:name,

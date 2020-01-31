@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-followers',
   templateUrl: './followers.page.html',
@@ -24,7 +25,8 @@ export class FollowersPage implements OnInit {
   constructor(public router: Router,
     public afAuth: AngularFireAuth,
     public store: AngularFireStorage,
-    public data: AngularFireDatabase, ) { }
+    public data: AngularFireDatabase,
+    public toastController: ToastController ) { }
 
   ngOnInit() {   }
 
@@ -79,16 +81,21 @@ export class FollowersPage implements OnInit {
   followers() {
     const databaseref = this.data.database.ref('/followers/' + this.afAuth.auth.currentUser.uid);
     databaseref.once("value", (snapshot) => {
-      snapshot.forEach(child => {
-        let values = (child.val());
-        this.follow.push(values);
-        console.log(this.follow);
-        this.tasks = this.follow;
-        console.log(this.tasks.length);
-       this.hasfollowers=this.tasks.length!=0? true:false;
-       console.log(this.hasfollowers);
-       
-      })
+      if(snapshot.exists()){
+        snapshot.forEach(child => {
+          let values = (child.val());
+          this.follow.push(values);
+          console.log(this.follow);
+          this.tasks = this.follow;
+          console.log(this.tasks.length);
+         this.hasfollowers=this.tasks.length!=0? true:false;
+         console.log(this.hasfollowers);
+         console.log(this.tasks);
+         
+        })
+
+      }
+      
     })
   }
 
@@ -100,6 +107,7 @@ export class FollowersPage implements OnInit {
       let followingref=this.data.database.ref('/following/'+i);
       const followingstats=await followingref.child(user).remove();
       this.goBack();
+      this.removebuttonclick();
     } catch (error) {
       console.log(error);
     }
@@ -113,6 +121,8 @@ export class FollowersPage implements OnInit {
     let followingid = this.afAuth.auth.currentUser.uid;
     this.getuserdetails(followerid, 'following', followingid);
     this.getuserdetails(followingid, 'followers', followerid);
+    this.goBack();
+    this.followbackbuttonclick();
   }
 
 
@@ -142,4 +152,26 @@ export class FollowersPage implements OnInit {
       event.target.complete();
     }, 2000);
   }
+
+  async followbackbuttonclick() {
+    const toast = await this.toastController.create({
+        color: 'dark',
+        duration: 2000,
+        message: 'User Added ',
+        showCloseButton: true
+      }).then(toast => {
+        toast.present();
+      });
+    }
+
+    async removebuttonclick() {
+      const toast = await this.toastController.create({
+          color: 'dark',
+          duration: 2000,
+          message: 'User Removed ',
+          showCloseButton: true
+        }).then(toast => {
+          toast.present();
+        });
+      }
 }

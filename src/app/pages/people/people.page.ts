@@ -4,6 +4,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Platform } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-people',
@@ -22,6 +24,8 @@ export class PeoplePage implements OnInit {
     public store: AngularFireStorage,
     public data: AngularFireDatabase,
     public platform: Platform,
+    public toastController: ToastController,
+    public loadingController: LoadingController
 
   ) { }
 
@@ -31,9 +35,12 @@ export class PeoplePage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.loading();
     this.getfollowinguser();
     this.getuser();
+
     setTimeout(() => {
+      
       for (let i = 0; i < this.tasks.length; i++) {
         if (this.followinguser.includes(this.tasks[i].id)) {
           this.followstatus[i] = true;
@@ -52,6 +59,7 @@ export class PeoplePage implements OnInit {
 
   clicked(i) {
     this.follow(this.tasks[i].id);
+   
 
   }
 
@@ -66,6 +74,7 @@ export class PeoplePage implements OnInit {
       let filteredarray = this.people.filter(val => val.id !== this.afAuth.auth.currentUser.uid);
       this.tasks = filteredarray;
     })
+    
   }
   getfollowinguser() {
     const dataref = this.data.database.ref();
@@ -107,8 +116,9 @@ export class PeoplePage implements OnInit {
     });
     let refer = this.data.database.ref('/followers/').child(followerid).child(followingid);
     refer.remove().then(() => {
-
     })
+    this.goBack();
+    this.unfollowbuttonclick();
   }
 
   follow(i) {
@@ -119,6 +129,8 @@ export class PeoplePage implements OnInit {
     this.getuserdetails(followerid, 'following', followingid);
     this.getuserdetails(followingid, 'followers', followerid);
     this.getfollowinguser();
+    this.goBack();
+    this.followbuttonclick();
   }
 
   doRefresh(event) {
@@ -127,5 +139,38 @@ export class PeoplePage implements OnInit {
       event.target.complete();
     }, 2000);
   }
+
+  async followbuttonclick() {
+    const toast = await this.toastController.create({
+        color: 'dark',
+        duration: 2000,
+        message: 'User Added ',
+        showCloseButton: true
+      }).then(toast => {
+        toast.present();
+      });
+    }
+
+    async unfollowbuttonclick() {
+      const toast = await this.toastController.create({
+          color: 'dark',
+          duration: 2000,
+          message: 'User Removed ',
+          showCloseButton: true
+        }).then(toast => {
+          toast.present();
+        });
+      }
+
+      async loading(){
+        const loading = await this.loadingController.create({
+          spinner: "lines",
+          duration: 500,
+          message: 'Loading...',
+          translucent: true,
+          cssClass: 'custom-class custom-loading'
+        });
+        return await loading.present();
+      }
 
 }

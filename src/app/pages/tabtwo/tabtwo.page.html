@@ -5,7 +5,7 @@
     </ion-textarea>
   </ion-item>
   <ion-row class="ion-justify-content-center">
-  <ion-button color="primary" (click)="savePost(text)">
+  <ion-button color="primary" (click)="savePost(text)" [disabled]="text.length<=10">
     <ion-icon name="cloud-upload"></ion-icon> &nbsp; UPLOAD
   </ion-button>
   </ion-row>

@@ -6,6 +6,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { Platform } from '@ionic/angular';
 import { ActivatedRoute, } from '@angular/router';
 import { Location } from "@angular/common";
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-share',
@@ -25,7 +26,8 @@ export class SharePage implements OnInit {
     public data: AngularFireDatabase,
     public platform: Platform,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    public toastController: ToastController
 
   ) { }
 
@@ -75,9 +77,23 @@ export class SharePage implements OnInit {
          ownerid:ownerid,
          ownername:ownername
       })
-      
+      this.goBack();
+      this.handleButtonClick();
     })
   }
+
+  
+
+   async handleButtonClick() {
+    const toast = await this.toastController.create({
+        color: 'dark',
+        duration: 2000,
+        message: 'Shared successfully',
+        showCloseButton: true
+      }).then(toast => {
+        toast.present();
+      });
+    }
 
 
   

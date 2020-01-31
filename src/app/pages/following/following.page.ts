@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-following',
   templateUrl: './following.page.html',
@@ -16,7 +17,8 @@ export class FollowingPage implements OnInit {
   constructor(public router: Router,
     public afAuth: AngularFireAuth,
     public store: AngularFireStorage,
-    public data: AngularFireDatabase, ) { }
+    public data: AngularFireDatabase,
+    public toastController: ToastController ) { }
   ngOnInit() {
   }
   ionViewWillEnter() {
@@ -53,6 +55,7 @@ export class FollowingPage implements OnInit {
       let followerref = this.data.database.ref('/followers/' + i);
       const followerstats = await followerref.child(user).remove();
       this.goBack();
+      this.unfollowbuttonclick();
     } catch (error) {
       console.log(error);
     }
@@ -64,6 +67,17 @@ export class FollowingPage implements OnInit {
       event.target.complete();
     }, 2000);
   }
+
+  async unfollowbuttonclick() {
+    const toast = await this.toastController.create({
+        color: 'dark',
+        duration: 2000,
+        message: 'User Unfollowed',
+        showCloseButton: true
+      }).then(toast => {
+        toast.present();
+      });
+    }
 
 
 

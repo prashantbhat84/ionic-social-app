@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { DataService } from '../../services/data.service';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tabone',
@@ -13,6 +14,7 @@ import { DataService } from '../../services/data.service';
 export class TabonePage implements OnInit {
 
   name;
+  text: string = "";
   user: any;
   followingarray: any = [];
   nofeeds: Boolean;
@@ -24,7 +26,8 @@ export class TabonePage implements OnInit {
     public alert: AlertController,
     public router: Router,
     public data: AngularFireDatabase,
-    private dataService: DataService
+    private dataService: DataService,
+    public loadingController: LoadingController
   ) { }
 
   ngOnInit() {
@@ -106,6 +109,16 @@ export class TabonePage implements OnInit {
       this.nofeeds = false;
       this.feeds = (Object.values(snap.val()));
     }
+
+    const loading = await this.loadingController.create({
+      spinner: "lines",
+      duration: 1500,
+      message: 'Loading...',
+      translucent: true,
+      cssClass: 'custom-class custom-loading'
+    });
+    return await loading.present();
+
   }
 
   async getfollowing() {
